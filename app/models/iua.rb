@@ -1,0 +1,2 @@
+class Iua < ApplicationRecord
+end

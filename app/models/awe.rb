@@ -1,0 +1,2 @@
+class Awe < ApplicationRecord
+end

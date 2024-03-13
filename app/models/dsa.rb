@@ -1,0 +1,2 @@
+class Dsa < ApplicationRecord
+end

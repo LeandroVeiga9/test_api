@@ -1,0 +1,2 @@
+class Iuy < ApplicationRecord
+end

@@ -1,0 +1,2 @@
+class Iu < ApplicationRecord
+end

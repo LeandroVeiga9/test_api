@@ -1,0 +1,2 @@
+class Asd < ApplicationRecord
+end
