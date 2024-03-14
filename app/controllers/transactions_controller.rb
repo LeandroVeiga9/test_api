@@ -18,14 +18,15 @@ class TransactionsController < ApplicationController
     @transaction = Transaction.new(transaction_params)
 
     begin
-      if transaction_params.values.include?(nil)
-        raise "#{transaction_params.keys[transaction_params.values.find_index(nil)]} can't bee null"
+      if transaction_params.values.include?(nil) || transaction_params.values.include?('')
+        index = transaction_params.values.find_index(nil) || transaction_params.values.find_index('')
+        raise "#{transaction_params.keys[index]} não pode ser vazio"
       elsif @transaction.card_number.digits.length != 16
-       raise "card_number invalid"
+        raise "Numero do cartão invalido"
       elsif @transaction.cvv.digits.length > 4 || @transaction.cvv.digits.length < 3
-        raise "cvv invalid"
+        raise "cvv invalido"
       elsif @transaction.value_in_cents < 1
-        raise "value_in_cents cant be 0"
+        raise "valor da transição não pode ser 0"
       end
       @transaction.save!
       render :show, status: :created, location: @transaction
