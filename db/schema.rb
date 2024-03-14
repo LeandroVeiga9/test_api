@@ -13,10 +13,10 @@
 ActiveRecord::Schema.define(version: 2024_03_13_202604) do
 
   create_table "transactions", force: :cascade do |t|
-    t.integer "card_number"
-    t.integer "value_in_cents"
-    t.date "card_expiration_date"
-    t.integer "cvv"
+    t.integer "card_number", limit: 16, null: false
+    t.integer "value_in_cents", null: false
+    t.date "card_expiration_date", null: false
+    t.integer "cvv", limit: 4, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

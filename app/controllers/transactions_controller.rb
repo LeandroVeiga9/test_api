@@ -17,10 +17,20 @@ class TransactionsController < ApplicationController
   def create
     @transaction = Transaction.new(transaction_params)
 
-    if @transaction.save
+    begin
+      if transaction_params.values.include?(nil)
+        raise "#{transaction_params.keys[transaction_params.values.find_index(nil)]} can't bee null"
+      elsif @transaction.card_number.digits.length != 16
+       raise "card_number invalid"
+      elsif @transaction.cvv.digits.length > 4 || @transaction.cvv.digits.length < 3
+        raise "cvv invalid"
+      elsif @transaction.value_in_cents < 1
+        raise "value_in_cents cant be 0"
+      end
+      @transaction.save!
       render :show, status: :created, location: @transaction
-    else
-      render json: @transaction.errors, status: :unprocessable_entity
+    rescue => e
+      render json: {error_message: e}, status: :unprocessable_entity
     end
   end
 
