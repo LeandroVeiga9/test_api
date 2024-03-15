@@ -1,2 +1,0 @@
-class Qwe < ApplicationRecord
-end

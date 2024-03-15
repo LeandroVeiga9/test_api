@@ -1,2 +1,0 @@
-class Dsa < ApplicationRecord
-end

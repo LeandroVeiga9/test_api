@@ -1,2 +1,0 @@
-class Awe < ApplicationRecord
-end

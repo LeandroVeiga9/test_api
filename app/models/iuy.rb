@@ -1,2 +1,0 @@
-class Iuy < ApplicationRecord
-end
