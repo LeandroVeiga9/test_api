@@ -1,0 +1,121 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/transactions":
+    post:
+      summary: Creates a transaction
+      tags:
+      - Transactions
+      parameters: []
+      responses:
+        '201':
+          description: transaction created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                card_number:
+                  type: integer
+                card_expiration_date:
+                  type: string
+                  format: datetime
+                cvv:
+                  type: integer
+                value_in_cents:
+                  type: integer
+              required:
+              - card_number
+              - card_expiration_date
+              - cvv
+              - value_in_cents
+    get:
+      summary: Retrieves all transactions
+      tags:
+      - Transactions
+      responses:
+        '200':
+          description: transaction found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transactions:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        card_number:
+                          type: integer
+                        card_expiration_date:
+                          type: string
+                          format: datetime
+                        cvv:
+                          type: integer
+                        value_in_cents:
+                          type: integer
+                  pagination:
+                    type: object
+                    properties:
+                      total_pages:
+                        type: integer
+                      current_page:
+                        type: integer
+                      next_page:
+                        type: integer
+                      prev_page:
+                        type: integer
+  "/transactions/{id}":
+    get:
+      summary: Retrieves a transaction
+      tags:
+      - Transactions
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: transaction found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  card_number:
+                    type: integer
+                  card_expiration_date:
+                    type: string
+                    format: datetime
+                  cvv:
+                    type: integer
+                  value_in_cents:
+                    type: integer
+                required:
+                - id
+                - card_number
+                - card_expiration_date
+                - cvv
+                - value_in_cents
+        '404':
+          description: transaction not found
+        '406':
+          description: unsupported accept header
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: www.example.com
