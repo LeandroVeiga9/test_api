@@ -1,10 +1,11 @@
 class TransactionsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_transaction, only: %i[ show update destroy ]
 
   # GET /transactions
   # GET /transactions.json
   def index
-    @transactions = Transaction.page(params[:page].presence || 1).per(10)
+    @transactions = Transaction.where(user: current_user).page(params[:page].presence || 1).per(10)
   end
 
   # GET /transactions/1
@@ -16,6 +17,7 @@ class TransactionsController < ApplicationController
   # POST /transactions.json
   def create
     @transaction = Transaction.new(transaction_params)
+    @transaction.user = current_user
 
     begin
       if transaction_params.values.include?(nil) || transaction_params.values.include?('')
