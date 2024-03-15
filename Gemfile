@@ -14,7 +14,7 @@ gem 'jbuilder', '~> 2.7'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '~> 3.1.7'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
@@ -30,6 +30,11 @@ gem 'kaminari'
 gem 'rswag-api'
 gem 'rswag-ui'
 gem 'multi_json'
+
+gem 'devise'
+gem 'devise_token_auth'
+gem 'dotenv-rails'
+gem 'jwt'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
