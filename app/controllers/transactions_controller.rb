@@ -56,7 +56,11 @@ class TransactionsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_transaction
-      @transaction = Transaction.find(params[:id])
+      @transaction = Transaction.where(id: params[:id]).first
+      if @transaction.nil?
+        render json: "transaction with id #{params[:id]} not found", status: :not_found
+        return
+      end
     end
 
     # Only allow a list of trusted parameters through.

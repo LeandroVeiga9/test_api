@@ -16,6 +16,19 @@ RSpec.configure do |config|
   # the root example_group in your specs, e.g. describe '...', openapi_spec: 'v2/swagger.json'
   config.openapi_specs = {
     'v1/swagger.yaml' => {
+      components: {
+        securitySchemes: {
+          basic_auth: {
+            type: :http,
+            scheme: :basic
+          },
+          api_key: {
+            type: :apiKey,
+            name: 'api_key',
+            in: :query
+          }
+        }
+      },
       openapi: '3.0.1',
       info: {
         title: 'API V1',
