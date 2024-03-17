@@ -1,4 +1,13 @@
 ---
+components:
+  securitySchemes:
+    basic_auth:
+      type: http
+      scheme: basic
+    api_key:
+      type: apiKey
+      name: api_key
+      in: query
 openapi: 3.0.1
 info:
   title: API V1
@@ -9,7 +18,13 @@ paths:
       summary: Creates a transaction
       tags:
       - Transactions
-      parameters: []
+      security:
+      - bearer_auth: []
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
       responses:
         '201':
           description: transaction created
@@ -39,6 +54,13 @@ paths:
       summary: Retrieves all transactions
       tags:
       - Transactions
+      security:
+      - bearer_auth: []
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
       responses:
         '200':
           description: transaction found
@@ -68,26 +90,36 @@ paths:
                     properties:
                       total_pages:
                         type: integer
+                        nullable: true
                       current_page:
                         type: integer
+                        nullable: true
                       next_page:
                         type: integer
+                        nullable: true
                       prev_page:
                         type: integer
+                        nullable: true
   "/transactions/{id}":
     get:
       summary: Retrieves a transaction
       tags:
       - Transactions
+      security:
+      - bearer_auth: []
       parameters:
       - name: id
         in: path
         required: true
         schema:
+          type: integer
+      - name: Authorization
+        in: header
+        schema:
           type: string
       responses:
         '200':
-          description: transaction found
+          description: Retrieves a transaction
           content:
             application/json:
               schema:
@@ -112,8 +144,54 @@ paths:
                 - value_in_cents
         '404':
           description: transaction not found
-        '406':
-          description: unsupported accept header
+  "/users":
+    post:
+      summary: Creates a user
+      tags:
+      - Users
+      parameters: []
+      responses:
+        '200':
+          description: user created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                    password:
+                      type: string
+  "/users/login":
+    post:
+      summary: Login
+      tags:
+      - Users
+      parameters: []
+      responses:
+        '200':
+          description: login soccessfully
+        '422':
+          description: email or password is invalid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                    password:
+                      type: string
 servers:
 - url: https://{defaultHost}
   variables:
