@@ -5,7 +5,7 @@ class TransactionsController < ApplicationController
   # GET /transactions
   # GET /transactions.json
   def index
-    @transactions = Transaction.where(user: current_user).page(params[:page].presence || 1).per(10)
+    @transactions = Transaction.page(params[:page].presence || 1).per(10)
   end
 
   # GET /transactions/1
